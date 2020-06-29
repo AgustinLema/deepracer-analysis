@@ -40,8 +40,10 @@ class Reward:
         steering = abs(params['steering_angle']) # Only need the absolute steering angle
         heading = params['heading']*3.14/180 # TODO: Remove temp fix
         steps = params['steps']
+        is_reversed = False
+        is_offtrack = False
         
-        if (is_reversed):
+        if (is_reversed or is_offtrack or is_crashed):
             return 0.0
 
         # Initialize reward with a small number but not zero
