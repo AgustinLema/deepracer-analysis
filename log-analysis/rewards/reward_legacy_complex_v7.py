@@ -70,6 +70,7 @@ def get_reward(params):
 
 
     # Actual logic starts here
+
     if (0.5 * track_width - distance_from_center) >= -.1 or is_reversed or is_offtrack:
         reward = 1.0
     else:
@@ -124,9 +125,9 @@ def get_reward(params):
         if not is_opposite_to_curve:
             reward = reward * 1.2
         elif speed > MAX_SPEED_CURVES_TURNING:
-            overspeed = speed - MAX_SPEED_CURVES_TURNING
-            max_overspeed = MAX_SPEED_CURVES_TURNING_CEILING - MAX_SPEED_CURVES_TURNING
-            overspeed_percentage = overspeed / max_overspeed
+            overspeed = speed - MAX_SPEED_CURVES_TURNING  # How much faster than limit
+            max_overspeed = MAX_SPEED_CURVES_TURNING_CEILING - MAX_SPEED_CURVES_TURNING  # What is the max speed difference to reach full punishment
+            overspeed_percentage = min(1, overspeed / max_overspeed)
             reward *= (1 - overspeed_percentage) # If going faster than turn speed, punish. if max_turning_ceiling=2.5 and max_turning=1.3. Going 1.5 would mean (0.2/1.2 punishment = 0.16%)
             
     
